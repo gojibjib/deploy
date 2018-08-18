@@ -1,0 +1,48 @@
+version: "3"
+services:
+  jibjib-data:
+    image: obitech/jibjib-data:1.0.0
+    container_name: jibjib-data
+    volumes:
+        - "./data/db:/data/db"
+    ports:
+        - "27017:27017"
+    env_file: ./db.env
+    entrypoint: /initdb/docker-entrypoint.sh
+    command: mongod --config /etc/mongo/mongod.conf --auth 
+    restart: always
+
+  jibjib-api:
+    image: "obitech/jibjib-api"
+    container_name: "jibjib-api"
+    environment:
+      - JIBJIB_DB_URL=read:read@jibjib-data/birds
+      - JIBJIB_MODEL_URL=http://jibjib-query:8081
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - jibjib-data
+    restart: always
+
+  tf-serving:
+    image: obitech/tensorflow-serving:devel-cpu
+    container_name: tf-serving
+    ports:
+      - 9000:9000
+    volumes:
+      - "./data/query/model:/serve"
+    command: tensorflow_model_server --port=9000 --model_name=jibjib_model --model_base_path=/serve/jibjib_model
+
+  jibjib-query:
+    image: obitech/jibjib-query
+    container_name: jibjib-query
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVING_URL=tf-serving
+      - SERVING_PORT=9000
+    volumes:
+      - "./data/query/pickle:/app/input/pickle"
+    restart: always
+    depends_on:
+      - tf-serving
