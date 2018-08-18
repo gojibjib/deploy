@@ -1,5 +1,7 @@
 # [JibJib](https://github.com/gojibjib): Local installation
 
+Install the JibJib stack locally via Docker Compose.
+
 ## Prerequisites
 
 - Install [Docker](https://docs.docker.com/install/)
