@@ -1,4 +1,4 @@
-# [JibJib](https://github.com/gojibjib): Local installation
+# [JibJib](https://github.com/gojibjib): local installation
 
 Install the JibJib stack locally via Docker Compose.
 
