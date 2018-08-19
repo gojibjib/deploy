@@ -21,9 +21,13 @@ Run `init.sh` to grab external files such as the model:
 ./init.sh
 ```
 
-Change the default users and passwords in `db.env`. Leave the `DB` value by its default, unless you have manually changed that value during the [jibjib-data](https://github.com/jibjib-data) build.
+Change the default users and passwords in `db.env` to the values you would like to initialize the [jibjib-data](https://github.com/jibjib-data) instance with. Leave the `DB` value by its default, unless you have manually changed that value during the  build. Then export the environment variables:
 
-Next you can start the stack with:
+```
+export $(grep -v '^#' db.env | xargs)
+``` 
+
+Next you can start the stack:
 
 ```
 docker-compose up -d

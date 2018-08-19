@@ -16,7 +16,7 @@ services:
     image: "obitech/jibjib-api:1.0.0"
     container_name: "jibjib-api"
     environment:
-      - JIBJIB_DB_URL=read:read@jibjib-data/birds
+      - JIBJIB_DB_URL=${READ_USER}:${READ_PW}@jibjib-data/birds
       - JIBJIB_MODEL_URL=http://jibjib-query:8081
     ports:
       - "8080:8080"
