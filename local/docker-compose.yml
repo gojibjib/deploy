@@ -32,6 +32,7 @@ services:
     volumes:
       - "./data/query/model:/serve"
     command: tensorflow_model_server --port=9000 --model_name=jibjib_model --model_base_path=/serve/jibjib_model
+    restart: always
 
   jibjib-query:
     image: obitech/jibjib-query:1.0.0
@@ -43,6 +44,6 @@ services:
       - SERVING_PORT=9000
     volumes:
       - "./data/query/pickle:/app/input/pickle"
-    restart: always
     depends_on:
       - tf-serving
+    restart: always
