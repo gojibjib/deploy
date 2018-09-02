@@ -8,9 +8,10 @@ ensure_query_dir:
 
 fetch_and_extract_pickle_file:
   archive.extracted:
-    - source: {{ files.mappings }}
+    - source: {{ salt['pillar.get']('jibjib:lookup:files:mappings') }}
     - name: {{ query.pickle_dir }}
     - skip_verify: True
+    - enforce_toplevel: False
 
 ensure_latest_query_image:
   dockerng.image_present:
@@ -28,5 +29,5 @@ start_query_container:
     - binds:
       - {{ query.pickle_dir }}:/app/input/pickle
     - port_bindings:
-      - {{ serving.host_port }}:8081
+      - {{ query.host_port }}:8081
     

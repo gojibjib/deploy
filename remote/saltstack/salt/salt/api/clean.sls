@@ -6,7 +6,8 @@ include:
 remove_api_image:
   dockerng.image_absent:
     - name: {{ api.image }}
+    - force: True
 
 remove_api_dir:
   file.absent:
-    name: {{ api.dir }}
+    - name: {{ api.dir }}

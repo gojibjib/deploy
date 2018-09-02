@@ -6,7 +6,8 @@ include:
 remove_query_image:
   dockerng.image_absent:
     - name: {{ query.image }}
-
+    - force: True
+    
 remove_query_dir:
   file.absent:
-    name: {{ query.dir }}
+    - name: {{ query.dir }}

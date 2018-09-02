@@ -9,7 +9,7 @@ resource "aws_instance" "jibjib_api" {
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "${var.key_name}"
-  security_groups = ["${aws_security_group.jibjib_api.name}"]
+  security_groups = ["${aws_security_group.jibjib.name}"]
   tags {
     Name = "${var.project_name}-api"
     Project = "${var.project_name}"
@@ -26,11 +26,11 @@ resource "aws_instance" "jibjib_api" {
 }
 
 # jibjib-data instance
-resource "aws_instance" "jibjib_db" {
+resource "aws_instance" "jibjib_data" {
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "${var.key_name}"
-  security_groups = ["${aws_security_group.jibjib_api.name}"]
+  security_groups = ["${aws_security_group.jibjib.name}"]
   tags {
     Name = "${var.project_name}-data"
     Project = "${var.project_name}"
@@ -51,7 +51,7 @@ resource "aws_instance" "jibjib_query" {
   ami = "${var.ami}"
   instance_type = "${var.query_instance_type}"
   key_name = "${var.key_name}"
-  security_groups = ["${aws_security_group.jibjib_api.name}"]
+  security_groups = ["${aws_security_group.jibjib.name}"]
   tags {
     Name = "${var.project_name}-query"
     Project = "${var.project_name}"
@@ -79,8 +79,8 @@ resource "aws_eip" "jibjib_api" {
 }
 
 # jibjib-data IP
-resource "aws_eip" "jibjib_db" {
-  instance = "${aws_instance.jibjib_db.id}"
+resource "aws_eip" "jibjib_data" {
+  instance = "${aws_instance.jibjib_data.id}"
 }
 
 # jibjib-query IP
@@ -89,7 +89,7 @@ resource "aws_eip" "jibjib_query" {
 }
 
 # Security Group
-resource "aws_security_group" "jibjib_api" {
+resource "aws_security_group" "jibjib" {
   name = "${var.project_name}_sg"
   description = "${var.sg_desc}"
   vpc_id = "${var.vpc}"

@@ -9,6 +9,7 @@ system:
         - ca-certificates
         - software-properties-common
         - python-apt
+        - python-pip
     users:
       - ubuntu
 

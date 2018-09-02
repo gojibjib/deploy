@@ -85,8 +85,8 @@ terraform apply
 Make sure to save the following outputs, substitute those variables down below with your IPs:
 
 - `jibjib_api_eip_public_ip`
-- `jibjib_db_eip_public_ip`
-- `jibjib_db_eip_private_ip`
+- `jibjib_data_eip_public_ip`
+- `jibjib_data_eip_private_ip`
 - `jibjib_query_eip_public_ip`
 - `jibjib_query_eip_private_ip`
 
@@ -115,7 +115,7 @@ jibjib_api:
   sudo: True
 
 jibjib_db:
-  host: jibjib_db_eip_public_ip
+  host: jibjib_data_eip_public_ip
   port: 22
   user: ubuntu
   priv: /root/keys/example_key.pem
@@ -145,7 +145,7 @@ Create your Pillar data:
 
 ```
 # Create your MongoDB root user
-cat << EOF > saltstastack/salt/pillar/db_root_auth.sls
+cat << EOF > saltstastack/salt/pillar/data_root_cred.sls
 root_user:
   user: root
   pw: changeMe
@@ -154,7 +154,7 @@ EOF
 
 ```
 # Create a user with read-only rights on the bird database
-cat << EOF > saltstack/salt/pillar/db_api_auth.sls
+cat << EOF > saltstack/salt/pillar/data_read_cred.sls
 db_user:
   user: prod-r
   pw: changeMe
@@ -163,8 +163,17 @@ EOF
 
 ```
 # The IP of your DB instance
-cat << EOF > saltstack/salt/pillar/db_ip.sls
-db_ip: jibjib_db_eip_private_ip
+cat << EOF > saltstack/salt/pillar/data_ip.sls
+db_ip: jibjib_data_eip_private_ip
+EOF
+```
+
+```
+# The IP of your query instance
+cat << EOF > salstack/salt/pillar/query_ip.sls
+query:
+  ip: jibjib_query_eip_private
+  port: 8081
 EOF
 ```
 
@@ -215,10 +224,10 @@ Folders are mounted into `/root` and commands require `sudo`. First test your co
 ```
 vagrant@jibjib-api:~$ sudo su
 root@jibjib-api:~# cd ~/salt/
-root@jibjib-api:~# salt-ssh -i "*" test.ping
+root@jibjib-api:~# salt-ssh -i --key-deploy "*" test.ping
 jibjib_api:
     True
-jibjib_db:
+jibjib_data:
     True
 jibjib_query:
     True
@@ -243,7 +252,7 @@ Test the connection (might take a while):
 
 ```
 root@20af504a6e01:/# cd /root/salt
-root@20af504a6e01:~/salt# salt-ssh -i "*" test.ping
+root@20af504a6e01:~/salt# salt-ssh -i --key-deploy "*" test.ping
 jibjib_api:
     True
 jibjib_db:

@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  vm_name = "jibjib-api"
+  vm_name = "jibjib-salt"
 
   config.vm.define "#{vm_name}", primary: true do |master|
     master.vm.box = "bento/ubuntu-16.04"

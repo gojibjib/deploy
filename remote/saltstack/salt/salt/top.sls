@@ -2,11 +2,12 @@ base:
   "*":
     - docker
 
-  "db":
-    - db
+  "data":
+    - data
   
   "api":
     - api
 
   "query":
+    - serving
     - query

@@ -17,7 +17,7 @@ ensure_latest_data_image:
 start_data_container:
   dockerng.running:
     - name: {{ data.container_name }}
-    - image: {{ api.image }}
+    - image: {{ data.image }}
     - force: True
     - environment:
       - ROOT_USER={{ data_root_user }}
@@ -26,7 +26,7 @@ start_data_container:
       - READ_PW={{ data_read_pw }}
       - DB={{ data.db_name }}
     - port_bindings:
-      - {{ api.host_port }}:8080
+      - {{ data.host_port }}:27017
     - binds:
       - {{ data.dir }}/data:/data/db
     - entrypoint: "/initdb/docker-entrypoint.sh"

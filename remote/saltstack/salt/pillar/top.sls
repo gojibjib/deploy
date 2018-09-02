@@ -7,6 +7,6 @@ base:
     - data_ip
     - query_ip
 
-  'db':
+  'data':
     - data_read_cred
     - data_root_cred

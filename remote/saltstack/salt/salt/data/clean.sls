@@ -6,7 +6,8 @@ include:
 remove_data_image:
   dockerng.image_absent:
     - name: {{ data.image }}
-
+    - force: True
+    
 remove_data_dir:
   file.absent:
-    name: {{ data.dir }}
+    - name: {{ data.dir }}
