@@ -1,10 +1,16 @@
 # [gojibjib/deploy](https://github.com/gojibjib/deploy)
 
-This repository holds intrusctions to deploy the JibJib stack:
+This repository holds intrusctions to deploy the JibJib stack.
 
-- [jibjib-data](https://github.com/gojibjib/jibjib-data): a custom MongoDB instance with the necessary bird information pre-installed
-- [jibjib-query](https://github.com/gojibjib/jibjib-query): a minimal Flask endpoint communicating with a Tensorflow Serving instance to infer the [jibjib-model](https://github.com/gojibjib/jibjib-model)
-- [jibjib-api](https://github.com/gojibjib/jibjib-api): an API for users to send audio files to and query the database
+## Repo layout
+The complete list of JibJib repos is:
+
+- [jibjib](https://github.com/gojibjib/jibjib): Our Android app. Records sounds and looks fantastic.
+- [deploy](https://github.com/gojibjib/deploy): Instructions to deploy the JibJib stack.
+- [jibjib-api](https://github.com/gojibjib/jibjib-api): Main API to receive database requests & audio files.
+- [jibjib-data](https://github.com/gojibjib/jibjib-data): A MongoDB instance holding information about detectable birds.
+- [jibjib-query](https://github.com/gojibjib/jibjib-query): A thin Python Flask API that handles communication with the [TensorFlow Serving](https://www.tensorflow.org/serving/) instance.
+
 
 ## Setup
 
