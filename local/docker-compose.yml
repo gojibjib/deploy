@@ -15,15 +15,18 @@ services:
     container_name: tf-serving
     volumes:
       - "./data/query/model:/serve"
-    command: tensorflow_model_server --port=9000 --model_name=jibjib_model --model_base_path=/serve/jibjib_model
+    command: tensorflow_model_server --port=9000 --model_name=jibjib_model_145 --model_base_path=/serve/jibjib_model_145
     restart: always
 
   jibjib-query:
     image: obitech/jibjib-query:1.1.0
-    container_name: jibjib-queryls
+    container_name: jibjib-query
     environment:
       - SERVING_URL=tf-serving
       - SERVING_PORT=9000
+      - MODEL_NAME=jibjib_model_145
+      - TRAIN_ID_LIST=train_id_list_1.1.0.pickle
+      - BIRD_ID_MAP=bird_id_map_1.0.0.pickle
     volumes:
       - "./data/query/pickle:/app/input/pickle"
     depends_on:
